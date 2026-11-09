@@ -1,0 +1,137 @@
+:root {
+  /* Colors */
+  --color-pink: #efa6c3;
+  --color-green: #a8c9a4;
+  --color-white: #ffffff;
+  --color-black: #252329;
+
+  --color-background: var(--color-pink);
+  --color-surface: var(--color-white);
+  --color-text: var(--color-black);
+
+  /* Typography */
+  --font-display: "Lilita One", sans-serif;
+  --font-mono: "Departure Mono", monospace;
+  --font-body: Verdana, sans-serif;
+
+  /* Spacing */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+
+  /* Shape */
+  --radius-sm: 0.75rem;
+  --radius-md: 1.25rem;
+  --radius-lg: 2rem;
+
+  /* Layout */
+  --page-inset: 16px;
+  --page-radius: 28px;
+  --page-width: 1600px;
+  --page-padding: clamp(1rem, 4vw, 3rem);
+}
+
+/* Reset */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  height: 100vh;
+  height: 100svh;
+  margin: 0;
+  padding: var(--page-inset);
+  overflow: hidden;
+
+  background: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+}
+
+/* Main page container */
+#app {
+  display: flex;
+  flex-direction: column;
+
+  width: min(100%, var(--page-width));
+  height: calc(100vh - (var(--page-inset) * 2));
+  height: calc(100svh - (var(--page-inset) * 2));
+
+  margin-inline: auto;
+
+  background: var(--color-surface);
+  border-radius: var(--page-radius);
+  overflow: clip;
+  /* position: relative;
+  display: flex;
+  flex-direction: column;
+
+  width: min(100%, var(--page-width));
+  height: calc(100vh - (var(--page-inset) * 2));
+  height: calc(100svh - (var(--page-inset) * 2));
+  min-height: 0;
+
+  margin-inline: auto;
+
+  background: var(--color-surface);
+  border-radius: var(--page-radius);
+  overflow: hidden; */
+}
+
+main {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+}
+
+.site-header,
+.site-footer {
+  flex-shrink: 0;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  :root {
+    --page-inset: 8px;
+    --page-radius: 20px;
+  }
+
+  #app {
+    border-radius: var(--radius-md);
+  }
+}
