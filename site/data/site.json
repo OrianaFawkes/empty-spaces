@@ -1,0 +1,34 @@
+{
+  "hero": {
+    "eyebrow": "A LITTLE CORNER OF THE INTERNET",
+    "title": "Welcome to my little corner of the internet.",
+    "description": "I'm a creative developer exploring software, design, and interactive experiences. This is where I share the things I've been making, the ideas I'm exploring, and a little world of my own.",
+    "primaryAction": {
+      "label": "Explore my work",
+      "href": "#projects"
+    },
+    "secondaryAction": {
+      "label": "Get in touch",
+      "href": "#contact"
+    }
+  },
+  "about": {
+    "eyebrow": "A LITTLE ABOUT ME",
+    "title": "Behind the screen.",
+    "intro": "Developer by craft, creative by nature.",
+    "paragraphs": [
+      "I'm a developer who enjoys bringing ideas to life through code, thoughtful design, and a little bit of experimentation.",
+      "I like exploring how software can be useful, expressive, and enjoyable to interact with. Empty Spaces is my little home for sharing that journey."
+    ]
+  },
+  "contact": {
+    "eyebrow": "SAY HELLO",
+    "title": "Have something in mind?",
+    "description": "Whether it's a project, an idea, or just a friendly hello, I'd love to hear from you.",
+    "email": "orianafawkes@gmail.com",
+    "buttonLabel": "Send me an email"
+  },
+  "footer": {
+    "message": "Made with care in Empty Spaces."
+  }
+}

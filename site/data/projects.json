@@ -1,0 +1,41 @@
+[
+  {
+    "id": "project-one",
+    "title": "Project One",
+    "category": "WEB DEVELOPMENT",
+    "description": "A short description of the project, what it does, and what I enjoyed about making it.",
+    "image": "",
+    "technologies": ["HTML", "CSS", "JavaScript"],
+    "links": {
+      "demo": "",
+      "source": ""
+    },
+    "featured": true
+  },
+  {
+    "id": "project-two",
+    "title": "Project Two",
+    "category": "APPLICATION DEVELOPMENT",
+    "description": "A brief introduction to another project. Highlight its purpose and an interesting feature.",
+    "image": "",
+    "technologies": ["Flutter", "Dart"],
+    "links": {
+      "demo": "",
+      "source": ""
+    },
+    "featured": true
+  },
+  {
+    "id": "project-three",
+    "title": "Project Three",
+    "category": "EXPERIMENT",
+    "description": "A place for smaller experiments, prototypes, and ideas that are still taking shape.",
+    "image": "",
+    "technologies": ["Creative Coding", "Exploration"],
+    "links": {
+      "demo": "",
+      "source": ""
+    },
+    "featured": false
+  }
+]

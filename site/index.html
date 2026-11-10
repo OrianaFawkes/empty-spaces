@@ -4,11 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#efa6c3" />
+
+    <!-- Basic SEO -->
     <meta
       name="description"
       content="A creative developer's little corner of the internet."
     />
+
     <title>Empty Spaces</title>
+
     <!-- Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -16,10 +20,36 @@
       href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Favicons (TODO: enable once the files exist) -->
+    <!--
+    <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="assets/icons/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+    -->
+
+    <!-- Open Graph: social sharing -->
+    <!-- TODO: enable once og-image.png and the public URL are ready. -->
+    <!--
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Empty Spaces">
+    <meta property="og:description" content="A creative developer's little corner of the internet.">
+    <meta property="og:url" content="https://emptyspaces.dev/">
+    <meta property="og:image" content="https://emptyspaces.dev/assets/images/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Empty Spaces">
+    <meta name="twitter:description" content="A creative developer's little corner of the internet.">
+    <meta name="twitter:image" content="https://emptyspaces.dev/assets/images/og-image.png">
+    -->
+
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="stylesheet" href="css/components.css" />
     <link rel="stylesheet" href="css/animations.css" />
+
     <!-- JavaScript -->
     <script type="module" src="js/main.js"></script>
   </head>
@@ -56,24 +86,22 @@
         <!-- Home -->
         <section id="home" class="hero">
           <div class="hero-content">
-            <p class="hero-eyebrow">A LITTLE CORNER OF THE INTERNET</p>
+            <p class="hero-eyebrow" data-site="hero.eyebrow"></p>
 
-            <h1>Welcome to my little corner of the internet.</h1>
+            <h1 data-site="hero.title"></h1>
 
-            <p class="hero-description">
-              I'm a creative developer exploring software, design, and
-              interactive experiences. This is where I share the things I've
-              been making, the ideas I'm exploring, and a little world of my
-              own.
-            </p>
+            <p class="hero-description" data-site="hero.description"></p>
 
             <div class="hero-actions">
-              <a class="button button-primary" href="#projects">
-                Explore my work
-              </a>
-              <a class="button button-secondary" href="#contact">
-                Get in touch
-              </a>
+              <a
+                class="button button-primary"
+                data-site="hero.primaryAction"
+              ></a>
+
+              <a
+                class="button button-secondary"
+                data-site="hero.secondaryAction"
+              ></a>
             </div>
           </div>
 
@@ -82,14 +110,6 @@
               <span>ORI</span>
               <span>CHARACTER ART GOES HERE</span>
             </div>
-
-            <!--
-            <img
-                class="hero-character"
-                src="assets/images/ori.png"
-                alt="Ori, the character mascot of Empty Spaces"
-            >
-            -->
           </div>
         </section>
         <!-- Projects -->
@@ -99,101 +119,44 @@
             <h2>Projects<span class="heading-period">.</span></h2>
             <p>A collection of projects, experiments, and things I've built.</p>
           </div>
-          <div class="project-grid">
-            <article class="project-card">
-              <div class="project-card-visual project-visual-pink">
-                <span>01</span>
-              </div>
-              <div class="project-card-content">
-                <p class="project-category">WEB DEVELOPMENT</p>
-                <h3>Project One</h3>
-                <p>
-                  A short description of the project, what it does, and what I
-                  enjoyed about making it.
-                </p>
-                <div class="project-tags">
-                  <span>HTML</span>
-                  <span>CSS</span>
-                  <span>JavaScript</span>
-                </div>
-              </div>
-            </article>
-            <article class="project-card">
-              <div class="project-card-visual project-visual-green">
-                <span>02</span>
-              </div>
-              <div class="project-card-content">
-                <p class="project-category">APPLICATION DEVELOPMENT</p>
-                <h3>Project Two</h3>
-                <p>
-                  A brief introduction to another project. Highlight its purpose
-                  and an interesting feature.
-                </p>
-                <div class="project-tags">
-                  <span>Flutter</span>
-                  <span>Dart</span>
-                </div>
-              </div>
-            </article>
-            <article class="project-card">
-              <div class="project-card-visual project-visual-neutral">
-                <span>03</span>
-              </div>
-              <div class="project-card-content">
-                <p class="project-category">EXPERIMENT</p>
-                <h3>Project Three</h3>
-                <p>
-                  A place for smaller experiments, prototypes, and ideas that
-                  are still taking shape.
-                </p>
-                <div class="project-tags">
-                  <span>Creative Coding</span>
-                  <span>Exploration</span>
-                </div>
-              </div>
-            </article>
+
+          <div class="project-grid" id="project-grid">
+            <p class="content-loading">Loading projects...</p>
           </div>
         </section>
         <!-- About -->
         <section id="about" class="content-section about-section">
           <div class="section-heading">
-            <p class="section-eyebrow">A LITTLE ABOUT ME</p>
-            <h2>Behind the screen<span class="heading-period">.</span></h2>
+            <p class="section-eyebrow" data-site="about.eyebrow"></p>
+            <h2 data-site="about.title"></h2>
           </div>
+
           <div class="about-content">
             <div class="about-intro">
-              <h3>Developer by craft, creative by nature.</h3>
+              <h3 data-site="about.intro"></h3>
             </div>
-            <div class="about-description">
-              <p>
-                I'm a developer who enjoys bringing ideas to life through code,
-                thoughtful design, and a little bit of experimentation.
-              </p>
-              <p>Lorem ipsum</p>
-              <p>Lorem ipsum</p>
-            </div>
+
+            <div class="about-description" data-about-paragraphs></div>
           </div>
         </section>
         <!-- Contact -->
         <section id="contact" class="content-section contact-section">
           <div class="contact-content">
-            <p class="section-eyebrow">SAY HELLO</p>
-            <h2>Have something in mind?</h2>
-            <p>
-              Whether it's a project, an idea, or just a friendly hello, I'd
-              love to hear from you.
-            </p>
-            <!-- Replace this address with your actual contact email. -->
-            <a class="button button-primary" href="mailto:MAIL@example.com">
-              Send me an email
-            </a>
+            <p class="section-eyebrow" data-site="contact.eyebrow"></p>
+            <h2 data-site="contact.title"></h2>
+            <p data-site="contact.description"></p>
+
+            <a class="button button-primary" data-site="contact.email"></a>
           </div>
         </section>
+        <footer class="site-footer">
+          <p>Made with care in Empty Spaces.</p>
+
+          <div id="social-links" class="social-links"></div>
+
+          <p>© <span id="current-year">2026</span> Empty Spaces</p>
+        </footer>
       </main>
-      <footer class="site-footer">
-        <p>Made with care in Empty Spaces.</p>
-        <p>© <span id="current-year">2026</span> Empty Spaces</p>
-      </footer>
     </div>
   </body>
 </html>

@@ -386,3 +386,19 @@
 .site-footer p {
   margin: 0;
 }
+
+.social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.social-links a {
+  color: var(--color-text);
+  font-size: 0.75rem;
+  text-decoration: none;
+}
+
+.social-links a:hover {
+  color: #c45d88;
+}
