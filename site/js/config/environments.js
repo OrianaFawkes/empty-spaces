@@ -20,7 +20,7 @@ export const ENVIRONMENTS = {
 
       parallax: {
         horizontal: -1.5,
-        vertical: 0.9,
+        vertical: -0.9,
         smoothing: 0.06,
       },
     },

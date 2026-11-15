@@ -1,331 +1,350 @@
-import { EFFECTS_CONFIG } from "../config/effectsConfig.js";
-import { smoothstep01, solveUndistortedRadius } from "../utils/math.js";
-
-const VIEWPORT_BUFFER = 160;
-const ELEMENT_SELECTOR = '[data-lens="element"]';
-
-export function createForegroundLens() {
-  let frameId = null;
-  let needsRebuild = true;
-  let disposed = false;
-
-  let resizeObserver = null;
-  let mutationObserver = null;
-
-  // Cached, untransformed document-space positions.
-  let entries = [];
-
-  // Prepare text for character-level distortion.
-  function prepareForegroundText() {
-    const elements = document.querySelectorAll(".distortible");
-
-    const segmenter =
-      typeof Intl.Segmenter === "function"
-        ? new Intl.Segmenter(undefined, { granularity: "grapheme" })
-        : null;
-
-    for (const element of elements) {
-      const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
-
-      const textNodes = [];
-
-      while (walker.nextNode()) {
-        const node = walker.currentNode;
-
-        if (
-          node.parentElement?.closest(".lens-word, .lens-char") ||
-          !node.nodeValue.trim()
-        ) {
-          continue;
-        }
-
-        textNodes.push(node);
-      }
-
-      for (const node of textNodes) {
-        const fragment = document.createDocumentFragment();
-        const tokens = node.nodeValue.match(/\s+|\S+/gu) || [];
-
-        for (const token of tokens) {
-          if (/^\s+$/u.test(token)) {
-            fragment.append(document.createTextNode(token));
-            continue;
-          }
-
-          const word = document.createElement("span");
-          word.className = "lens-word";
-
-          const characters = segmenter
-            ? [...segmenter.segment(token)].map((item) => item.segment)
-            : Array.from(token);
-
-          for (const character of characters) {
-            const glyph = document.createElement("span");
-            glyph.className = "lens-char";
-            glyph.textContent = character;
-            word.append(glyph);
-          }
-
-          fragment.append(word);
-        }
-
-        node.replaceWith(fragment);
-      }
-    }
-  }
-
-  // Remove transforms owned by this effect before measuring layout.
-  function clearOwnedStyles(elements) {
-    for (const element of elements) {
-      element.style.transform = "";
-      element.style.opacity = "";
-      element.style.filter = "";
-    }
-  }
+// Deprecated: 
+// This effect is too expensive to run on large pages and is not currently used in the site. 
+// It may be re-enabled in the future if performance can be improved.
+
+// import { EFFECTS_CONFIG } from "../config/effectsConfig.js";
+// import { smoothstep01, solveUndistortedRadius } from "../utils/math.js";
+
+// const VIEWPORT_BUFFER = 160;
+// const ELEMENT_SELECTOR = '[data-lens="element"]';
+
+// export function createForegroundLens() {
+//   let readyPromise = null;
+//   let resolveReady = null;
+
+//   let frameId = null;
+//   let needsRebuild = true;
+//   let disposed = false;
+
+//   let resizeObserver = null;
+//   let mutationObserver = null;
+
+//   // Cached, untransformed document-space positions.
+//   let entries = [];
+
+//   // Prepare text for character-level distortion.
+//   function prepareForegroundText() {
+//     const elements = document.querySelectorAll(".distortible");
+
+//     const segmenter =
+//       typeof Intl.Segmenter === "function"
+//         ? new Intl.Segmenter(undefined, { granularity: "grapheme" })
+//         : null;
+
+//     for (const element of elements) {
+//       const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+
+//       const textNodes = [];
+
+//       while (walker.nextNode()) {
+//         const node = walker.currentNode;
+
+//         if (
+//           node.parentElement?.closest(".lens-word, .lens-char") ||
+//           !node.nodeValue.trim()
+//         ) {
+//           continue;
+//         }
+
+//         textNodes.push(node);
+//       }
+
+//       for (const node of textNodes) {
+//         const fragment = document.createDocumentFragment();
+//         const tokens = node.nodeValue.match(/\s+|\S+/gu) || [];
+
+//         for (const token of tokens) {
+//           if (/^\s+$/u.test(token)) {
+//             fragment.append(document.createTextNode(token));
+//             continue;
+//           }
+
+//           const word = document.createElement("span");
+//           word.className = "lens-word";
+
+//           const characters = segmenter
+//             ? [...segmenter.segment(token)].map((item) => item.segment)
+//             : Array.from(token);
+
+//           for (const character of characters) {
+//             const glyph = document.createElement("span");
+//             glyph.className = "lens-char";
+//             glyph.textContent = character;
+//             word.append(glyph);
+//           }
+
+//           fragment.append(word);
+//         }
+
+//         node.replaceWith(fragment);
+//       }
+//     }
+//   }
+
+//   // Remove transforms owned by this effect before measuring layout.
+//   function clearOwnedStyles(elements) {
+//     for (const element of elements) {
+//       element.style.transform = "";
+//       element.style.opacity = "";
+//       element.style.filter = "";
+//     }
+//   }
 
-  // Measure positions only when the actual layout changes.
-  function collectLayoutEntries() {
-    const glyphs = [...document.querySelectorAll(".lens-char")];
+//   // Measure positions only when the actual layout changes.
+//   function collectLayoutEntries() {
+//     const glyphs = [...document.querySelectorAll(".lens-char")];
 
-    const lensElements = [
-      ...document.querySelectorAll(ELEMENT_SELECTOR),
-    ].filter((element) => !element.closest(".distortible"));
+//     const lensElements = [
+//       ...document.querySelectorAll(ELEMENT_SELECTOR),
+//     ].filter((element) => !element.closest(".distortible"));
 
-    const targets = [...glyphs, ...lensElements];
-
-    // Complete all style resets before performing layout reads.
-    clearOwnedStyles(targets);
-
-    const scrollX = window.scrollX;
-    const scrollY = window.scrollY;
-    const nextEntries = [];
+//     const targets = [...glyphs, ...lensElements];
 
-    for (const element of glyphs) {
-      const rect = element.getBoundingClientRect();
+//     // Complete all style resets before performing layout reads.
+//     clearOwnedStyles(targets);
 
-      nextEntries.push({
-        element,
-        type: "glyph",
-        documentX: rect.left + rect.width * 0.5 + scrollX,
-        documentY: rect.top + rect.height * 0.5 + scrollY,
-      });
-    }
+//     const scrollX = window.scrollX;
+//     const scrollY = window.scrollY;
+//     const nextEntries = [];
 
-    for (const element of lensElements) {
-      const rect = element.getBoundingClientRect();
+//     for (const element of glyphs) {
+//       const rect = element.getBoundingClientRect();
 
-      nextEntries.push({
-        element,
-        type: "element",
-        documentX: rect.left + rect.width * 0.5 + scrollX,
-        documentY: rect.top + rect.height * 0.5 + scrollY,
-      });
-    }
+//       nextEntries.push({
+//         element,
+//         type: "glyph",
+//         documentX: rect.left + rect.width * 0.5 + scrollX,
+//         documentY: rect.top + rect.height * 0.5 + scrollY,
+//       });
+//     }
 
-    // Enables efficient lookup of entries near the viewport.
-    nextEntries.sort((a, b) => a.documentY - b.documentY);
+//     for (const element of lensElements) {
+//       const rect = element.getBoundingClientRect();
 
-    entries = nextEntries;
-  }
+//       nextEntries.push({
+//         element,
+//         type: "element",
+//         documentX: rect.left + rect.width * 0.5 + scrollX,
+//         documentY: rect.top + rect.height * 0.5 + scrollY,
+//       });
+//     }
 
-  // Binary search for the first entry near the viewport.
-  function lowerBoundDocumentY(minimumY) {
-    let low = 0;
-    let high = entries.length;
+//     // Enables efficient lookup of entries near the viewport.
+//     nextEntries.sort((a, b) => a.documentY - b.documentY);
 
-    while (low < high) {
-      const middle = (low + high) >>> 1;
+//     entries = nextEntries;
+//   }
 
-      if (entries[middle].documentY < minimumY) {
-        low = middle + 1;
-      } else {
-        high = middle;
-      }
-    }
+//   // Binary search for the first entry near the viewport.
+//   function lowerBoundDocumentY(minimumY) {
+//     let low = 0;
+//     let high = entries.length;
 
-    return low;
-  }
+//     while (low < high) {
+//       const middle = (low + high) >>> 1;
 
-  // Apply the inverse radial lens mapping to one entry.
-  function applyLensTransform(entry, viewportX, viewportY, width, height) {
-    const halfHeight = Math.max(height * 0.5, 1);
-    const centerX = width * 0.5;
-    const centerY = height * 0.5;
-    const strength = EFFECTS_CONFIG.fisheye;
+//       if (entries[middle].documentY < minimumY) {
+//         low = middle + 1;
+//       } else {
+//         high = middle;
+//       }
+//     }
 
-    const qx = (viewportX - centerX) / halfHeight;
-    const qy = -(viewportY - centerY) / halfHeight;
+//     return low;
+//   }
 
-    const distortedRadius = Math.hypot(qx, qy);
+//   // Apply the inverse radial lens mapping to one entry.
+//   function applyLensTransform(entry, viewportX, viewportY, width, height) {
+//     const halfHeight = Math.max(height * 0.5, 1);
+//     const centerX = width * 0.5;
+//     const centerY = height * 0.5;
+//     const strength = EFFECTS_CONFIG.fisheye;
 
-    if (distortedRadius < 0.0001) {
-      entry.element.style.transform = "none";
-    } else {
-      const radius = solveUndistortedRadius(distortedRadius, strength);
+//     const qx = (viewportX - centerX) / halfHeight;
+//     const qy = -(viewportY - centerY) / halfHeight;
 
-      const ratio = radius / distortedRadius;
+//     const distortedRadius = Math.hypot(qx, qy);
 
-      const px = qx * ratio;
-      const py = qy * ratio;
+//     if (distortedRadius < 0.0001) {
+//       entry.element.style.transform = "none";
+//     } else {
+//       const radius = solveUndistortedRadius(distortedRadius, strength);
 
-      const mappedX = centerX + px * halfHeight;
-      const mappedY = centerY - py * halfHeight;
+//       const ratio = radius / distortedRadius;
 
-      const translateX = mappedX - viewportX;
-      const translateY = mappedY - viewportY;
+//       const px = qx * ratio;
+//       const py = qy * ratio;
 
-      // Local inverse Jacobian of the radial lens.
-      const tangential = 1 / (1 + strength * radius * radius);
+//       const mappedX = centerX + px * halfHeight;
+//       const mappedY = centerY - py * halfHeight;
 
-      const radial = 1 / (1 + 3 * strength * radius * radius);
+//       const translateX = mappedX - viewportX;
+//       const translateY = mappedY - viewportY;
 
-      const delta = radial - tangential;
+//       // Local inverse Jacobian of the radial lens.
+//       const tangential = 1 / (1 + strength * radius * radius);
 
-      const ux = px / radius;
-      const uy = py / radius;
+//       const radial = 1 / (1 + 3 * strength * radius * radius);
 
-      const a = tangential + delta * ux * ux;
-      const b = -delta * ux * uy;
-      const c = -delta * ux * uy;
-      const d = tangential + delta * uy * uy;
+//       const delta = radial - tangential;
 
-      entry.element.style.transform =
-        `translate3d(${translateX}px, ${translateY}px, 0) ` +
-        `matrix(${a}, ${b}, ${c}, ${d}, 0, 0)`;
-    }
+//       const ux = px / radius;
+//       const uy = py / radius;
 
-    // Preserve the original character-level edge fade.
-    if (entry.type === "glyph") {
-      const edgeDistance = Math.min(viewportY, height - viewportY);
+//       const a = tangential + delta * ux * ux;
+//       const b = -delta * ux * uy;
+//       const c = -delta * ux * uy;
+//       const d = tangential + delta * uy * uy;
 
-      const fadeProgress =
-        (edgeDistance - height * 0.035) / (height * 0.16 - height * 0.035);
+//       entry.element.style.transform =
+//         `translate3d(${translateX}px, ${translateY}px, 0) ` +
+//         `matrix(${a}, ${b}, ${c}, ${d}, 0, 0)`;
+//     }
 
-      const fade = smoothstep01(fadeProgress);
+//     // Preserve the original character-level edge fade.
+//     if (entry.type === "glyph") {
+//       const edgeDistance = Math.min(viewportY, height - viewportY);
 
-      entry.element.style.opacity = fade.toFixed(3);
+//       const fadeProgress =
+//         (edgeDistance - height * 0.035) / (height * 0.16 - height * 0.035);
 
-      entry.element.style.filter = `blur(${((1 - fade) * 3).toFixed(2)}px)`;
-    }
-  }
+//       const fade = smoothstep01(fadeProgress);
 
-  // Update only entries inside the viewport and its buffer.
-  function renderVisibleEntries() {
-    if (!entries.length) return;
+//       entry.element.style.opacity = fade.toFixed(3);
 
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+//       entry.element.style.filter = `blur(${((1 - fade) * 3).toFixed(2)}px)`;
+//     }
+//   }
 
-    const scrollX = window.scrollX;
-    const scrollY = window.scrollY;
+//   // Update only entries inside the viewport and its buffer.
+//   function renderVisibleEntries() {
+//     if (!entries.length) return;
 
-    const firstVisible = lowerBoundDocumentY(scrollY - VIEWPORT_BUFFER);
+//     const width = window.innerWidth;
+//     const height = window.innerHeight;
 
-    const lastDocumentY = scrollY + height + VIEWPORT_BUFFER;
+//     const scrollX = window.scrollX;
+//     const scrollY = window.scrollY;
 
-    for (let index = firstVisible; index < entries.length; index += 1) {
-      const entry = entries[index];
+//     const firstVisible = lowerBoundDocumentY(scrollY - VIEWPORT_BUFFER);
 
-      if (entry.documentY > lastDocumentY) break;
+//     const lastDocumentY = scrollY + height + VIEWPORT_BUFFER;
 
-      const viewportX = entry.documentX - scrollX;
-      const viewportY = entry.documentY - scrollY;
+//     for (let index = firstVisible; index < entries.length; index += 1) {
+//       const entry = entries[index];
 
-      applyLensTransform(entry, viewportX, viewportY, width, height);
-    }
-  }
+//       if (entry.documentY > lastDocumentY) break;
 
-  // Consolidate all updates into one animation frame.
-  function scheduleUpdate(rebuild = false) {
-    if (disposed) return;
+//       const viewportX = entry.documentX - scrollX;
+//       const viewportY = entry.documentY - scrollY;
 
-    if (rebuild) needsRebuild = true;
+//       applyLensTransform(entry, viewportX, viewportY, width, height);
+//     }
+//   }
 
-    if (frameId !== null) return;
+//   // Consolidate all updates into one animation frame.
+//   function scheduleUpdate(rebuild = false) {
+//     if (disposed) return;
 
-    frameId = requestAnimationFrame(() => {
-      frameId = null;
+//     if (rebuild) needsRebuild = true;
 
-      if (needsRebuild) {
-        needsRebuild = false;
-        collectLayoutEntries();
-      }
+//     if (frameId !== null) return;
 
-      renderVisibleEntries();
-    });
-  }
+//     frameId = requestAnimationFrame(() => {
+//       frameId = null;
 
-  function handleScroll() {
-    scheduleUpdate();
-  }
+//       if (needsRebuild) {
+//         needsRebuild = false;
+//         collectLayoutEntries();
+//       }
 
-  function handleLayoutChange() {
-    scheduleUpdate(true);
-  }
+//       renderVisibleEntries();
 
-  function handleMutations() {
-    prepareForegroundText();
-    scheduleUpdate(true);
-  }
+//       // Resolve initialization after the first complete lens pass.
+//       if (resolveReady) {
+//         resolveReady();
+//         resolveReady = null;
+//       }
+//     });
+//   }
 
-  function init() {
-    prepareForegroundText();
-    scheduleUpdate(true);
+//   function handleScroll() {
+//     scheduleUpdate();
+//   }
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
+//   function handleLayoutChange() {
+//     scheduleUpdate(true);
+//   }
 
-    window.addEventListener("resize", handleLayoutChange);
+//   function handleMutations() {
+//     prepareForegroundText();
+//     scheduleUpdate(true);
+//   }
 
-    window.addEventListener("load", handleLayoutChange);
+//   function init() {
+//     if (readyPromise) return readyPromise;
 
-    if (document.fonts?.ready) {
-      document.fonts.ready.then(() => {
-        scheduleUpdate(true);
-      });
-    }
+//     readyPromise = new Promise((resolve) => {
+//       resolveReady = resolve;
+//     });
 
-    const app = document.querySelector("#app");
+//     prepareForegroundText();
+//     scheduleUpdate(true);
 
-    if ("ResizeObserver" in window && app) {
-      resizeObserver = new ResizeObserver(handleLayoutChange);
+//     window.addEventListener("scroll", handleScroll, { passive: true });
 
-      resizeObserver.observe(app);
-    }
+//     window.addEventListener("resize", handleLayoutChange);
+//     window.addEventListener("load", handleLayoutChange);
 
-    if ("MutationObserver" in window && app) {
-      mutationObserver = new MutationObserver(handleMutations);
+//     if (document.fonts?.ready) {
+//       document.fonts.ready.then(() => {
+//         scheduleUpdate(true);
+//       });
+//     }
 
-      mutationObserver.observe(app, {
-        childList: true,
-        characterData: true,
-        subtree: true,
-      });
-    }
-  }
+//     const app = document.querySelector("#app");
 
-  function dispose() {
-    disposed = true;
+//     if ("ResizeObserver" in window && app) {
+//       resizeObserver = new ResizeObserver(handleLayoutChange);
+//       resizeObserver.observe(app);
+//     }
 
-    window.removeEventListener("scroll", handleScroll);
-    window.removeEventListener("resize", handleLayoutChange);
-    window.removeEventListener("load", handleLayoutChange);
+//     if ("MutationObserver" in window && app) {
+//       mutationObserver = new MutationObserver(handleMutations);
 
-    if (frameId !== null) {
-      cancelAnimationFrame(frameId);
-      frameId = null;
-    }
+//       mutationObserver.observe(app, {
+//         childList: true,
+//         characterData: true,
+//         subtree: true,
+//       });
+//     }
 
-    resizeObserver?.disconnect();
-    mutationObserver?.disconnect();
+//     return readyPromise;
+//   }
 
-    clearOwnedStyles(entries.map((entry) => entry.element));
+//   function dispose() {
+//     disposed = true;
 
-    entries = [];
-  }
+//     window.removeEventListener("scroll", handleScroll);
+//     window.removeEventListener("resize", handleLayoutChange);
+//     window.removeEventListener("load", handleLayoutChange);
 
-  return {
-    init,
-    update: () => scheduleUpdate(true),
-    dispose,
-  };
-}
+//     if (frameId !== null) {
+//       cancelAnimationFrame(frameId);
+//       frameId = null;
+//     }
+
+//     resizeObserver?.disconnect();
+//     mutationObserver?.disconnect();
+
+//     clearOwnedStyles(entries.map((entry) => entry.element));
+
+//     entries = [];
+//   }
+
+//   return {
+//     init,
+//     update: () => scheduleUpdate(true),
+//     dispose,
+//   };
+// }
