@@ -13,7 +13,6 @@ function disposeObject(root) {
     for (const material of materials) {
       if (!material) continue;
 
-      // Dispose textures owned by this model's materials.
       for (const value of Object.values(material)) {
         if (value?.isTexture) value.dispose();
       }
@@ -27,7 +26,7 @@ export function createEnvironmentLoader(environmentRoot) {
   const loader = new GLTFLoader();
   let activeScene = null;
 
-  function load(environmentConfig) {
+  function load(environmentConfig, onProgress = () => {}) {
     return new Promise((resolve, reject) => {
       loader.load(
         environmentConfig.model,
@@ -57,24 +56,35 @@ export function createEnvironmentLoader(environmentRoot) {
           });
 
           environmentRoot.add(activeScene);
+
           console.info("Loaded environment:", environmentConfig.model, gltf);
+
           resolve(gltf);
         },
+
         (event) => {
-          if (event.total) {
-            console.info(
-              `Loading environment: ${Math.round(
-                (event.loaded / event.total) * 100,
-              )}%`,
-            );
+          const progress = event.total
+            ? Math.round((event.loaded / event.total) * 100)
+            : null;
+
+          onProgress({
+            loaded: event.loaded,
+            total: event.total || null,
+            progress,
+          });
+
+          if (progress !== null) {
+            console.info(`Loading environment: ${progress}%`);
           }
         },
+
         (error) => {
           console.error(
             "Could not load the GLB environment:",
             environmentConfig.model,
             error,
           );
+
           reject(error);
         },
       );
