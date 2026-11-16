@@ -1,0 +1,98 @@
+{
+  "fictional": {
+    "identity": "fictional",
+    "card": {
+      "institution": "AMBROSE RESEARCH INSTITUTE",
+      "classification": "PERSONNEL RECORD",
+      "name": "ORIANA FAWKES",
+      "id": "ARI-PER-0147",
+      "role": "RESEARCHER",
+      "department": "EMPTY SPACE OBSERVATION",
+      "status": "ACTIVE",
+      "clearance": "[REDACTED]",
+      "barcode": "ARI0147-OF"
+    },
+    "left": {
+      "eyebrow": "AFFILIATION / 001",
+      "title": "A researcher of the in-between.",
+      "paragraphs": [
+        "Oriana Fawkes is a researcher affiliated with the Ambrose Research Institute, specializing in the observation and documentation of Empty Spaces.",
+        "Her work focuses on identifying spatial irregularities, documenting anomalous environments, and examining the relationship between the corrupted Leyline Network and the spaces it has produced."
+      ]
+    },
+    "right": {
+      "eyebrow": "RESEARCH PROFILE / 002",
+      "title": "Areas of observation.",
+      "items": [
+        {
+          "label": "SPECIALIZATION",
+          "value": "Spatial Anomalies"
+        },
+        {
+          "label": "RESEARCH AREA",
+          "value": "Empty Space Observation"
+        },
+        {
+          "label": "ASSOCIATED EVENT",
+          "value": "The Severance Event"
+        },
+        {
+          "label": "NETWORK",
+          "value": "Leyline Network"
+        },
+        {
+          "label": "CLEARANCE",
+          "value": "[REDACTED]"
+        }
+      ]
+    }
+  },
+  "personal": {
+    "identity": "personal",
+    "card": {
+      "institution": "EMPTY SPACES / INDEPENDENT",
+      "classification": "DEVELOPER PROFILE",
+      "name": "ORI",
+      "id": "ES-DEV-0001",
+      "role": "CREATIVE DEVELOPER",
+      "department": "SOFTWARE & EXPERIMENTATION",
+      "status": "BUILDING",
+      "clearance": "PUBLIC",
+      "barcode": "ES0001-ORI"
+    },
+    "left": {
+      "eyebrow": "A LITTLE ABOUT ME / 001",
+      "title": "Developer by craft, creative by nature.",
+      "paragraphs": [
+        "Outside the archives, I'm a developer who enjoys building useful, thoughtful, and occasionally unconventional software.",
+        "Most of my work revolves around application development, particularly with Flutter. I also enjoy exploring web technologies, experimenting with new tools, and turning small ideas into working projects."
+      ]
+    },
+    "right": {
+      "eyebrow": "TECHNICAL PROFILE / 002",
+      "title": "Tools of the trade.",
+      "items": [
+        {
+          "label": "APPLICATION DEVELOPMENT",
+          "value": "Flutter · Dart"
+        },
+        {
+          "label": "BACKEND & SERVICES",
+          "value": "Firebase · FlutterFire"
+        },
+        {
+          "label": "WEB TECHNOLOGIES",
+          "value": "HTML · CSS · JavaScript"
+        },
+        {
+          "label": "CURRENT EXPLORATION",
+          "value": "FastAPI · Neon"
+        },
+        {
+          "label": "INTERESTS",
+          "value": "Creative development · Interactive experiences"
+        }
+      ]
+    }
+  }
+}

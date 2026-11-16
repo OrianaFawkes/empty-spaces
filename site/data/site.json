@@ -1,19 +1,29 @@
+
 {
   "hero": {
-    "eyebrow": "A LITTLE CORNER OF THE INTERNET",
-    "title": "Welcome to my little corner of the internet.",
-    "description": "I'm a creative developer exploring software, design, and interactive experiences. This is where I share the things I've been making, the ideas I'm exploring, and a little world of my own.",
-    "primaryAction": {
-      "label": "Explore my work",
-      "href": "#projects"
-    },
-    "secondaryAction": {
-      "label": "Get in touch",
-      "href": "#contact"
-    }
+    "eyebrow": "EMPTY SPACES",
+    "title": "Welcome to the in-between.",
+    "description": "Empty Spaces is an ongoing archive of experiments, observations, and constructed experiences. Its contents span software development, creative exploration, and phenomena that resist conventional classification.",
+    "actions": [
+      {
+        "label": "ACCESS ARCHIVE",
+        "href": "#projects",
+        "style": "primary"
+      },
+      {
+        "label": "OPEN CHANNEL",
+        "href": "#contact",
+        "style": "secondary"
+      },
+      {
+        "label": "VIEW PERSONNEL RECORD",
+        "href": "#about",
+        "style": "text"
+      }
+    ]
   },
   "about": {
-    "eyebrow": "A LITTLE ABOUT ME",
+    "eyebrow": "ABOUT ORI",
     "title": "Behind the screen.",
     "intro": "Developer by craft, creative by nature.",
     "paragraphs": [
@@ -22,13 +32,13 @@
     ]
   },
   "contact": {
-    "eyebrow": "SAY HELLO",
-    "title": "Have something in mind?",
-    "description": "Whether it's a project, an idea, or just a friendly hello, I'd love to hear from you.",
+    "eyebrow": "OPEN CHANNEL",
+    "title": "A signal has been received.",
+    "description": "The channel is open. Leave a message or join the conversation.",
     "email": "orianafawkes@gmail.com",
-    "buttonLabel": "Send me an email"
+    "buttonLabel": "SEND AN EMAIL"
   },
   "footer": {
-    "message": "Made with care in Empty Spaces."
+    "message": "INSANITY IN INTELLECT."
   }
 }

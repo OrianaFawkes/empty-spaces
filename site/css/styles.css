@@ -10,6 +10,8 @@
   --font-display: "Redaction", Georgia, serif;
   --font-body: "Red Hat Display", sans-serif;
   --font-mono: "Red Hat Mono", monospace;
+
+  --tracker-gutter: clamp(3.5rem, 5vw, 5rem);
 }
 
 * {
@@ -86,6 +88,7 @@ textarea {
 
   margin-inline: auto;
   padding: var(--page-padding);
+  padding-right: calc(var(--page-padding) + var(--tracker-gutter));
 
   display: flex;
   flex-direction: column;
@@ -145,6 +148,7 @@ h2 {
 @media (max-width: 600px) {
   :root {
     --page-padding: 24px;
+    --tracker-gutter: 2.5rem;
   }
 
   h1 {

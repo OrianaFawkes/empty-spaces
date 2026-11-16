@@ -2,6 +2,7 @@
 
 .hero {
   min-height: 100vh;
+  min-height: 100svh;
 
   display: flex;
   flex-direction: column;
@@ -80,8 +81,11 @@
 /* Shared sections */
 
 .content-section {
-  min-height: 80vh;
+  min-height: 100vh;
+  min-height: 100svh;
+
   padding-block: clamp(5rem, 10vh, 9rem);
+  scroll-margin-top: 0;
 }
 
 .section-heading {
@@ -292,10 +296,11 @@
 }
 
 .section-tracker-link {
+  position: relative;
+
   display: flex;
   align-items: baseline;
   justify-content: flex-end;
-  gap: 0.65rem;
 
   color: rgba(241, 238, 231, 0.45);
   font-family: var(--font-mono);
@@ -304,12 +309,11 @@
   text-decoration: none;
   text-align: right;
 
-  transition:
-    color 180ms ease,
-    opacity 180ms ease;
+  transition: color 180ms ease;
 }
 
 .section-tracker-link:hover,
+.section-tracker-link:focus-visible,
 .section-tracker-link.is-active {
   color: #fff;
 }
@@ -319,9 +323,15 @@
 }
 
 .section-tracker-label {
+  position: absolute;
+  right: calc(100% + 0.65rem);
+
+  width: max-content;
   max-width: 220px;
+
   opacity: 0;
   transform: translateX(8px);
+  pointer-events: none;
 
   transition:
     opacity 180ms ease,
@@ -329,9 +339,18 @@
 }
 
 .section-tracker-link:hover .section-tracker-label,
-.section-tracker-link.is-active .section-tracker-label {
+.section-tracker-link:focus-visible .section-tracker-label {
   opacity: 1;
   transform: translateX(0);
+}
+
+.section-tracker-link.is-active .section-tracker-number {
+  color: var(--ink);
+}
+
+.section-tracker-link:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 5px;
 }
 
 /* Loading screen */
@@ -386,6 +405,435 @@
   transition: width 200ms ease;
 }
 
+/* Hero action hierarchy */
+
+.hero-text-link {
+  display: inline-flex;
+  align-items: center;
+
+  min-height: 48px;
+  padding: 0.75rem 0.25rem;
+
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+
+  transition:
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.hero-text-link:hover {
+  color: var(--ink);
+  transform: translateX(4px);
+}
+
+.hero-text-link:focus-visible,
+.project-link:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 5px;
+}
+
+/* Project archive metadata */
+
+.project-card-metadata {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+
+  margin-bottom: 0.75rem;
+}
+
+.project-card-metadata .project-category {
+  margin: 0;
+}
+
+.project-status {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-align: right;
+}
+
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+
+  margin-top: 1.5rem;
+}
+
+.project-link {
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-underline-offset: 0.35em;
+
+  transition:
+    color 180ms ease,
+    opacity 180ms ease;
+}
+
+.project-link:hover {
+  text-decoration: underline;
+}
+
+.project-source-link {
+  color: var(--muted);
+}
+
+/* Research disclosure */
+
+.research-disclosure {
+  max-width: 760px;
+
+  margin-top: clamp(5rem, 10vw, 9rem);
+  margin-left: auto;
+  padding-top: 1.25rem;
+
+  border-top: 1px solid rgba(241, 238, 231, 0.3);
+}
+
+.research-disclosure-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+
+  margin-bottom: 1.25rem;
+
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+}
+
+.research-disclosure p {
+  max-width: 680px;
+  margin-bottom: 1.5rem;
+
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.8;
+}
+
+.research-redactions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  opacity: 0.55;
+}
+
+.research-redactions span {
+  display: block;
+  width: 90px;
+  height: 7px;
+
+  background: var(--ink);
+}
+
+.research-redactions span:nth-child(2) {
+  width: 145px;
+}
+
+.research-redactions span:nth-child(3) {
+  width: 55px;
+}
+
+/* About dossier */
+
+.about-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.personnel-dossier {
+  width: 100%;
+}
+
+.dossier-layout {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(260px, 0.95fr)
+    minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(1.5rem, 3vw, 3.5rem);
+}
+
+.dossier-left-support,
+.dossier-right-support {
+  min-width: 0;
+  animation: dossier-content-in 350ms ease both;
+}
+
+.dossier-eyebrow {
+  margin-bottom: 1rem;
+
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.dossier-support-title {
+  margin-bottom: 1.25rem;
+
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 2.5vw, 2.5rem);
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+.dossier-paragraph {
+  margin-bottom: 1rem;
+
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+.dossier-facts {
+  margin: 0;
+}
+
+.dossier-fact {
+  padding-block: 0.85rem;
+  border-top: 1px solid rgba(241, 238, 231, 0.16);
+}
+
+.dossier-fact dt {
+  margin-bottom: 0.3rem;
+
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+}
+
+.dossier-fact dd {
+  margin: 0;
+
+  color: var(--ink);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+/* Identity card */
+
+.dossier-card-area {
+  min-width: 0;
+  perspective: 1200px;
+}
+
+.dossier-flip-button {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  margin-top: 1rem;
+  padding: 0.65rem 1rem;
+
+  border: 1px solid rgba(241, 238, 231, 0.3);
+  background: transparent;
+  color: var(--ink);
+
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-align: center;
+
+  cursor: pointer;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease;
+}
+
+.dossier-flip-button:hover {
+  background: rgba(241, 238, 231, 0.08);
+  border-color: var(--accent);
+}
+
+.dossier-flip-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.dossier-flip-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 7px;
+  border-radius: 4px;
+}
+
+.dossier-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 0.72;
+  min-height: 390px;
+  max-height: 520px;
+
+  transform-style: preserve-3d;
+  transition: transform 750ms cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+.dossier-layout.is-flipped .dossier-card {
+  transform: rotateY(180deg);
+}
+
+.dossier-card-face {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  overflow: hidden;
+
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.08), transparent 45%), #d4c9b8;
+
+  color: #172224;
+  border: 1px solid rgba(241, 238, 231, 0.4);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
+}
+
+.dossier-card-back {
+  transform: rotateY(180deg);
+
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.07), transparent 45%), #26383a;
+
+  color: #f1eee7;
+}
+
+.dossier-card-header,
+.dossier-card-footer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+}
+
+.dossier-card-header span:first-child {
+  max-width: 65%;
+}
+
+.dossier-card-header span:last-child {
+  text-align: right;
+}
+
+.dossier-card-identity {
+  margin-block: auto;
+  padding-block: 2rem;
+}
+
+.dossier-card-role {
+  margin-bottom: 0.75rem;
+
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+}
+
+.dossier-card-name {
+  margin-bottom: 0.75rem;
+
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 4vw, 4.5rem);
+  font-weight: 400;
+  line-height: 0.9;
+  overflow-wrap: anywhere;
+}
+
+.dossier-card-id {
+  margin: 0;
+
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+}
+
+.dossier-card-details {
+  margin: 0;
+  border-top: 1px solid currentColor;
+}
+
+.dossier-card-detail {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+
+  padding-block: 0.65rem;
+  border-bottom: 1px solid rgba(23, 34, 36, 0.2);
+
+  font-family: var(--font-mono);
+  font-size: 0.57rem;
+}
+
+.dossier-card-back .dossier-card-detail {
+  border-color: rgba(241, 238, 231, 0.2);
+}
+
+.dossier-card-detail dt {
+  opacity: 0.65;
+}
+
+.dossier-card-detail dd {
+  margin: 0;
+  text-align: right;
+}
+
+.dossier-card-barcode {
+  overflow-wrap: anywhere;
+  letter-spacing: 0.15em;
+}
+
+.dossier-card-marking {
+  text-align: right;
+}
+
+.dossier-flip-hint {
+  margin: 1rem 0 0;
+
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+
+/* Dossier transitions */
+
+@keyframes dossier-content-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Responsive */
 
 @media (max-width: 900px) {
@@ -420,5 +868,73 @@
   .site-footer {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .research-disclosure-heading {
+    font-size: 0.6rem;
+  }
+
+  .project-card-metadata {
+    align-items: flex-start;
+  }
+
+  .hero-text-link {
+    min-height: 40px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .dossier-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(250px, 0.9fr);
+    gap: 2rem;
+  }
+
+  .dossier-left-support {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .dossier-card-area {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  .dossier-right-support {
+    grid-column: 1;
+    grid-row: 2;
+  }
+}
+
+@media (max-width: 650px) {
+  .dossier-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+
+  .dossier-left-support,
+  .dossier-card-area,
+  .dossier-right-support {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .dossier-card-area {
+    width: min(100%, 380px);
+    margin-inline: auto;
+  }
+
+  .dossier-card {
+    min-height: 440px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dossier-card {
+    transition-duration: 0.01ms;
+  }
+
+  .dossier-left-support,
+  .dossier-right-support {
+    animation: none;
   }
 }

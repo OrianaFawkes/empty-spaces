@@ -1,0 +1,24 @@
+{
+  "sections": [
+    {
+      "id": "home",
+      "number": "01",
+      "label": "EMPTY SPACES"
+    },
+    {
+      "id": "about",
+      "number": "02",
+      "label": "ABOUT ORI"
+    },
+    {
+      "id": "projects",
+      "number": "03",
+      "label": "AFTERWORK"
+    },
+    {
+      "id": "contact",
+      "number": "04",
+      "label": "OPEN CHANNEL"
+    }
+  ]
+}

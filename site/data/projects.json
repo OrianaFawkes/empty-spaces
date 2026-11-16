@@ -1,41 +1,67 @@
+
 [
   {
-    "id": "project-one",
-    "title": "Project One",
-    "category": "WEB DEVELOPMENT",
-    "description": "A short description of the project, what it does, and what I enjoyed about making it.",
-    "image": "",
-    "technologies": ["HTML", "CSS", "JavaScript"],
-    "links": {
-      "demo": "",
-      "source": ""
-    },
-    "featured": true
-  },
-  {
-    "id": "project-two",
-    "title": "Project Two",
-    "category": "APPLICATION DEVELOPMENT",
-    "description": "A brief introduction to another project. Highlight its purpose and an interesting feature.",
+    "id": "smart-padding",
+    "entry": "001",
+    "title": "Smart Padding",
+    "category": "DEVELOPER TOOLING",
+    "status": "PUBLISHED",
+    "description": "A Flutter padding widget with cascading values for all sides, horizontal and vertical pairs, and individual sides. Designed to make common padding configurations more concise and convenient.",
     "image": "",
     "technologies": ["Flutter", "Dart"],
     "links": {
-      "demo": "",
+      "demo": "https://pub.dev/packages/smart_padding",
       "source": ""
     },
+    "repositoryVisibility": "public",
     "featured": true
   },
   {
-    "id": "project-three",
-    "title": "Project Three",
-    "category": "EXPERIMENT",
-    "description": "A place for smaller experiments, prototypes, and ideas that are still taking shape.",
+    "id": "care-label-integrity-check",
+    "entry": "002",
+    "title": "Care Label Integrity Check",
+    "category": "WEB / APPLICATION DEVELOPMENT",
+    "status": "IN DEVELOPMENT",
+    "description": "A Flutter Web application currently under development. Further details will be added as the project takes shape.",
     "image": "",
-    "technologies": ["Creative Coding", "Exploration"],
+    "technologies": ["Flutter", "Dart", "Firebase", "FlutterFire"],
     "links": {
-      "demo": "",
+      "demo": "https://clic.emptyspaces.dev/",
       "source": ""
     },
-    "featured": false
+    "repositoryVisibility": "private",
+    "featured": true
+  },
+  {
+    "id": "arcade",
+    "entry": "003",
+    "title": "Arcade",
+    "category": "WEB / APPLICATION DEVELOPMENT",
+    "status": "IN DEVELOPMENT",
+    "description": "A Flutter Web project in development, with a backend currently being explored. More details will follow as its features take shape.",
+    "image": "",
+    "technologies": ["Flutter", "Dart", "FastAPI", "Neon"],
+    "links": {
+      "demo": "https://arcade.emptyspaces.dev/",
+      "source": ""
+    },
+    "repositoryVisibility": "public",
+    "featured": true
+  },
+  {
+    "id": "balasa",
+    "entry": "004",
+    "title": "Balasa",
+    "category": "WEB / APPLICATION DEVELOPMENT",
+    "status": "IN DEVELOPMENT",
+    "description": "Welcome to Bean & Bluff, a cozy little cafe where cards are on the table and there's always another game to play. A collection of card-game experiences brought together under one cafe-inspired setting.",
+    "image": "",
+    "technologies": ["Flutter", "Dart", "Firebase", "FlutterFire"],
+    "links": {
+      "demo": "https://balasa.emptyspaces.dev/",
+      "source": ""
+    },
+    "repositoryVisibility": "private",
+    "featured": true
   }
 ]
