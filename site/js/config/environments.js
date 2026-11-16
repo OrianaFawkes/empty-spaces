@@ -16,7 +16,7 @@ export const ENVIRONMENTS = {
       far: 300,
 
       position: [3.0, 30.0, 3.0],
-      target: [3.0, 30.0, 30.0],
+      target: [3.0, 21.0, 30.0],
 
       parallax: {
         horizontal: -1.5,
