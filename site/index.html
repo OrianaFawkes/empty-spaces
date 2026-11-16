@@ -5,10 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#10191b" />
 
-    <meta
-      name="description"
-      content="Welcome to the in-between."
-    />
+    <meta name="description" content="Welcome to the in-between." />
 
     <title>Empty Spaces</title>
 
@@ -172,11 +169,49 @@
 
       <!-- Footer -->
       <footer class="site-footer">
-        <p data-site="footer.message"></p>
+        <div class="footer-top">
+          <p class="footer-motto" data-site="footer.message">
+            INSANITY IN INTELLECT.
+          </p>
 
-        <div id="social-links" class="social-links"></div>
+          <div class="footer-clock" aria-label="Your local date and time">
+            <span class="footer-label">LOCAL TIME</span>
+            <time id="local-clock-time">--:--:--</time>
+            <span id="local-clock-meta">Detecting timezone...</span>
+          </div>
+        </div>
 
-        <p>© <span id="current-year">2026</span> Empty Spaces</p>
+        <div class="footer-bottom">
+          <div class="asset-register">
+            <div class="footer-label">
+              <span>ASSET REGISTER</span>
+              <span>3D MODEL / 001</span>
+            </div>
+
+            <p>
+              <a
+                href="https://skfb.ly/ptMwq"
+                target="_blank"
+                rel="noopener noreferrer"
+                >"Train"</a
+              >
+              by abhayexe · Sketchfab ·
+              <a
+                href="https://creativecommons.org/licenses/by/4.0/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >CC BY 4.0</a
+              >
+            </p>
+          </div>
+
+          <div class="footer-meta">
+            <div id="social-links" class="social-links"></div>
+            <p class="footer-copyright">
+              © <span id="current-year"></span> EMPTY SPACES
+            </p>
+          </div>
+        </div>
       </footer>
     </main>
   </body>

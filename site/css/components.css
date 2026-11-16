@@ -820,6 +820,128 @@
   text-align: center;
 }
 
+/* Footer */
+
+.site-footer {
+  width: 100%;
+  padding: clamp(2.5rem, 6vw, 5rem) 0 1.5rem;
+  border-top: 1px solid rgba(241, 238, 231, 0.16);
+}
+
+.footer-top,
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.footer-top {
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.footer-motto {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+  letter-spacing: 0.16em;
+  color: var(--ink);
+}
+
+.footer-clock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.35rem;
+  text-align: right;
+}
+
+.footer-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+}
+
+#local-clock-time {
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+}
+
+#local-clock-meta {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  line-height: 1.6;
+}
+
+.footer-bottom {
+  align-items: flex-end;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(241, 238, 231, 0.1);
+}
+
+.asset-register {
+  max-width: 440px;
+}
+
+.asset-register p {
+  margin: 0.65rem 0 0;
+  color: var(--muted);
+  font-size: 0.72rem;
+  line-height: 1.7;
+}
+
+.asset-register a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: rgba(241, 238, 231, 0.35);
+  text-underline-offset: 3px;
+}
+
+.asset-register a:hover {
+  color: var(--accent);
+}
+
+.footer-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.footer-copyright {
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+}
+
+@media (max-width: 650px) {
+  .footer-top,
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer-clock,
+  .footer-meta {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .footer-bottom {
+    gap: 2rem;
+  }
+}
+
 /* Dossier transitions */
 
 @keyframes dossier-content-in {

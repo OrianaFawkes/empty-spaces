@@ -1,4 +1,5 @@
 import { renderPersonnelDossier } from "./components/personnelDossier.js";
+import { initFooterClock } from "./components/footerClock.js";
 
 const DATA_PATH = "data/";
 
@@ -327,6 +328,8 @@ export async function loadContent() {
     renderProjects(projects);
     renderSocials(socials);
     renderSectionTracker(navigation.sections);
+
+    initFooterClock();
 
     return true;
   } catch (error) {
