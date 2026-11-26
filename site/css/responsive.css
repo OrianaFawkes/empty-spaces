@@ -1,0 +1,67 @@
+@media (max-width: 800px) {
+  :root {
+    --section-spacing: 6rem;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding-top: 8rem;
+    padding-bottom: 3rem;
+  }
+
+  .hero-content {
+    max-width: 650px;
+  }
+
+  .hero-character {
+    justify-self: center;
+    width: min(100%, 560px);
+    height: min(65vh, 600px);
+    min-height: 320px;
+    margin-right: 0;
+  }
+
+  .hero-character-sprite {
+    right: auto;
+    left: 50%;
+    transform: translate3d(
+      calc(-50% + var(--character-x, 0px)),
+      var(--character-y, 0px),
+      0
+    );
+  }
+
+  .footer-top,
+  .footer-bottom {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .footer-clock {
+    text-align: left;
+  }
+
+  .footer-copyright {
+    text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding-top: 6rem;
+  }
+
+  .hero-actions {
+    align-items: stretch;
+  }
+
+  .hero-actions .button {
+    flex: 1 1 auto;
+  }
+
+  .hero-character {
+    height: 50vh;
+    min-height: 280px;
+  }
+}

@@ -35,19 +35,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <link
-      href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100..900;1,100..900&family=Red+Hat+Mono:ital,wght@0,300..700;1,300..700&display=swap"
-      rel="stylesheet"
-    />
-
-    <link
-      href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&family=Redaction:ital,wght@0,400;0,700;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Redaction:ital,wght@0,400;0,700;1,400&display=swap"
       rel="stylesheet"
     />
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/styles.css" />
-    <link rel="stylesheet" href="css/components.css" />
-    <link rel="stylesheet" href="css/animations.css" />
 
     <!-- Three.js -->
     <script type="importmap">
@@ -64,20 +57,6 @@
   </head>
 
   <body>
-    <!-- 3D Background -->
-    <div id="background" aria-hidden="true"></div>
-
-    <!-- Loading Screen -->
-    <div id="loading-screen" role="status" aria-live="polite">
-      <div class="loading-content">
-        <p class="loading-title">EMPTY SPACES</p>
-        <p id="loading-message">Preparing the space...</p>
-        <div class="loading-progress-track">
-          <span id="loading-progress"></span>
-        </div>
-      </div>
-    </div>
-
     <!-- Section Tracker -->
     <nav
       id="section-tracker"
@@ -91,28 +70,37 @@
       <section id="home" class="hero">
         <div class="hero-content">
           <p class="eyebrow" data-site="hero.eyebrow"></p>
-
           <h1 data-site="hero.title"></h1>
-
           <p class="hero-description" data-site="hero.description"></p>
-
           <div class="hero-actions" id="hero-actions"></div>
+        </div>
+
+        <div class="hero-character" id="hero-character">
+          <img
+            src="assets/images/ori.png"
+            alt=""
+            class="hero-character-sprite"
+            draggable="false"
+          />
         </div>
       </section>
 
       <!-- About -->
       <section id="about" class="content-section about-section">
-        <div class="section-heading">
-          <p class="eyebrow" data-site="about.eyebrow"></p>
-          <h2 data-site="about.title"></h2>
-        </div>
+        <div class="about-section-inner">
+          <header class="about-section-heading">
+            <p class="eyebrow">ABOUT ORI</p>
+            <h2>The person behind the archive.</h2>
+          </header>
 
-        <div
-          id="personnel-dossier"
-          class="personnel-dossier"
-          aria-label="About Ori"
-        >
-          <p class="content-loading">Loading profile...</p>
+          <div
+            id="personnel-dossier"
+            class="personnel-dossier"
+            role="region"
+            aria-label="About Ori"
+          >
+            <p class="content-loading">Loading profile...</p>
+          </div>
         </div>
       </section>
 
@@ -174,7 +162,7 @@
             INSANITY IN INTELLECT.
           </p>
 
-          <div class="footer-clock" aria-label="Your local date and time">
+          <div class="footer-clock" aria-label="Local date and time">
             <span class="footer-label">LOCAL TIME</span>
             <time id="local-clock-time">--:--:--</time>
             <span id="local-clock-meta">Detecting timezone...</span>
@@ -182,31 +170,9 @@
         </div>
 
         <div class="footer-bottom">
-          <div class="asset-register">
-            <div class="footer-label">
-              <span>ASSET REGISTER</span>
-              <span>3D MODEL / 001</span>
-            </div>
-
-            <p>
-              <a
-                href="https://skfb.ly/ptMwq"
-                target="_blank"
-                rel="noopener noreferrer"
-                >"Train"</a
-              >
-              by abhayexe · Sketchfab ·
-              <a
-                href="https://creativecommons.org/licenses/by/4.0/"
-                target="_blank"
-                rel="noopener noreferrer"
-                >CC BY 4.0</a
-              >
-            </p>
-          </div>
-
           <div class="footer-meta">
             <div id="social-links" class="social-links"></div>
+
             <p class="footer-copyright">
               © <span id="current-year"></span> EMPTY SPACES
             </p>

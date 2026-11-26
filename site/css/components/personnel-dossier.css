@@ -1,0 +1,687 @@
+/* ========================================
+   PERSONNEL DOSSIER
+======================================== */
+
+.about-section {
+  position: relative;
+  isolation: isolate;
+
+  width: 100%;
+  max-width: none;
+  padding-inline: 0;
+
+  background:
+    radial-gradient(
+      ellipse at 50% 40%,
+      rgba(255, 255, 255, 0.55),
+      transparent 70%
+    ),
+    var(--color-about-canvas);
+}
+
+.about-section-inner {
+  width: min(100%, var(--page-width));
+  margin-inline: auto;
+  padding-inline: var(--page-gutter);
+}
+
+.about-section-heading {
+  max-width: 720px;
+  margin-bottom: clamp(3.5rem, 7vw, 6rem);
+}
+
+.about-section-heading .eyebrow {
+  margin-bottom: 1.25rem;
+}
+
+.about-section-heading h2 {
+  max-width: 680px;
+  margin-bottom: 0;
+}
+
+.personnel-dossier {
+  width: 100%;
+}
+
+.dossier-layout {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(300px, 0.95fr)
+    minmax(0, 1fr);
+  grid-template-areas: "left card right";
+  align-items: start;
+  gap: clamp(2rem, 4vw, 5rem);
+
+  width: 100%;
+}
+
+.dossier-left-support,
+.dossier-right-support {
+  align-self: start;
+}
+
+.dossier-left-support {
+  grid-area: left;
+}
+
+.dossier-right-support {
+  grid-area: right;
+}
+
+.dossier-support {
+  min-width: 0;
+}
+
+.dossier-eyebrow {
+  margin-bottom: 1.25rem;
+  color: var(--color-accent-dark);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  line-height: 1.5;
+}
+
+.dossier-support-title {
+  margin-bottom: 1.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 2.5vw, 2.65rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+}
+
+.dossier-paragraph {
+  max-width: 440px;
+  margin-bottom: 1.15rem;
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  line-height: 1.95;
+}
+
+/* ========================================
+   SUPPORTING INFORMATION
+======================================== */
+
+.dossier-facts {
+  display: grid;
+  gap: 0;
+  margin: 0;
+}
+
+.dossier-fact {
+  display: grid;
+  gap: 0.35rem;
+  padding-block: 0.85rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.dossier-fact:first-child {
+  border-top: 1px solid var(--color-border);
+}
+
+.dossier-fact dt {
+  color: var(--color-muted);
+  font-size: 0.61rem;
+  letter-spacing: 0.08em;
+}
+
+.dossier-fact dd {
+  margin: 0;
+  font-size: 0.76rem;
+  line-height: 1.6;
+}
+
+/* ========================================
+   CENTRAL IDENTITY CARD
+======================================== */
+
+.dossier-card-area {
+  grid-area: card;
+  display: grid;
+  justify-items: center;
+  gap: 1.25rem;
+  min-width: 0;
+  perspective: 1400px;
+}
+
+.dossier-card-toggle {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dossier-card-toggle:focus-visible {
+  outline: 2px solid var(--color-accent-dark);
+  outline-offset: 8px;
+}
+
+.dossier-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/5;
+  transform-style: preserve-3d;
+  transition: transform 800ms cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+.dossier-card.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.dossier-card-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+
+  padding: clamp(1rem, 2vw, 1.5rem) clamp(1rem, 2vw, 1.5rem)
+    clamp(1.3rem, 2.5vw, 1.9rem);
+
+  border: 1px solid var(--color-border-strong);
+  border-radius: 4px;
+
+  background: var(--color-surface);
+  color: var(--color-ink);
+
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+
+  box-shadow:
+    0 18px 36px rgba(36, 36, 36, 0.1),
+    0 4px 10px rgba(36, 36, 36, 0.06);
+}
+
+.dossier-card-face::before {
+  position: absolute;
+  z-index: -1;
+  right: -12%;
+  bottom: -45%;
+  width: 75%;
+  aspect-ratio: 1;
+  border: 1px solid rgba(36, 36, 36, 0.08);
+  border-radius: 50%;
+  content: "";
+}
+
+.dossier-card-front {
+  transform: rotateY(0deg);
+}
+
+.dossier-card-back {
+  transform: rotateY(180deg);
+  background: var(--color-ink);
+  color: var(--color-canvas);
+  border-color: var(--color-ink);
+}
+
+.dossier-card-back::before {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Physical card hole */
+
+.dossier-card-hole {
+  position: absolute;
+  z-index: 2;
+  top: 0.65rem;
+  left: 50%;
+
+  width: 2.65rem;
+  height: 0.65rem;
+
+  transform: translateX(-50%);
+  border: 2px solid rgba(36, 36, 36, 0.18);
+  border-radius: 999px;
+
+  background: var(--color-canvas);
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.2),
+    0 0 0 2px rgba(255, 255, 255, 0.3);
+}
+
+.dossier-card-back .dossier-card-hole {
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+/* Card header */
+
+.dossier-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.dossier-card-institution {
+  max-width: 65%;
+  font-size: clamp(0.48rem, 0.75vw, 0.62rem);
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+}
+
+.dossier-card-classification {
+  color: var(--color-muted);
+  font-size: clamp(0.43rem, 0.65vw, 0.55rem);
+  text-align: right;
+  letter-spacing: 0.06em;
+}
+
+.dossier-card-back .dossier-card-classification {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Identity */
+
+.dossier-card-identity {
+  position: relative;
+  z-index: 1;
+  margin-block: auto;
+  padding-block: 1rem;
+}
+
+.dossier-card-role {
+  margin-bottom: 0.5rem;
+  color: var(--color-accent-dark);
+  font-size: clamp(0.48rem, 0.7vw, 0.6rem);
+  letter-spacing: 0.12em;
+}
+
+.dossier-card-back .dossier-card-role {
+  color: var(--color-accent);
+}
+
+.dossier-card-name {
+  margin-bottom: 0.4rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.5vw, 2.4rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.dossier-card-id {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: clamp(0.5rem, 0.7vw, 0.62rem);
+  letter-spacing: 0.08em;
+}
+
+.dossier-card-back .dossier-card-id {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* Details */
+
+.dossier-card-details {
+  display: grid;
+  grid-template-columns: 1.5fr 0.8fr 0.8fr;
+  gap: 0.75rem;
+  margin: 0;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.dossier-card-back .dossier-card-details {
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.dossier-card-detail {
+  min-width: 0;
+}
+
+.dossier-card-detail dt {
+  margin-bottom: 0.3rem;
+  color: var(--color-muted);
+  font-size: clamp(0.4rem, 0.55vw, 0.5rem);
+  letter-spacing: 0.08em;
+}
+
+.dossier-card-detail dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-size: clamp(0.48rem, 0.7vw, 0.62rem);
+  line-height: 1.5;
+}
+
+.dossier-card-back .dossier-card-detail dt {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* Footer */
+
+.dossier-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  padding-top: 0.75rem;
+}
+
+.dossier-card-barcode {
+  font-size: clamp(0.5rem, 0.7vw, 0.62rem);
+  letter-spacing: 0.12em;
+}
+
+.dossier-card-marking {
+  color: var(--color-muted);
+  font-size: 0.55rem;
+  letter-spacing: 0.08em;
+}
+
+.dossier-card-back .dossier-card-marking {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* Interaction hint */
+
+.dossier-flip-hint {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-align: center;
+  transition: color var(--duration-fast) ease;
+}
+
+.dossier-card-toggle:hover + .dossier-flip-hint {
+  color: var(--color-accent-dark);
+}
+
+.dossier-card-toggle:hover .dossier-card-face {
+  box-shadow:
+    0 24px 44px rgba(36, 36, 36, 0.13),
+    0 6px 14px rgba(36, 36, 36, 0.07);
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 1050px) {
+  .dossier-layout {
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(270px, 0.9fr);
+    grid-template-areas:
+      "left card"
+      "right card";
+    align-items: center;
+    column-gap: 3rem;
+    row-gap: 3rem;
+  }
+
+  .dossier-card-area {
+    position: static;
+  }
+
+  .dossier-card-name {
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+  }
+}
+
+@media (max-width: 700px) {
+  .dossier-layout {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "left"
+      "card"
+      "right";
+    gap: 3rem;
+  }
+
+  .dossier-card-area {
+    position: static;
+    width: min(100%, 440px);
+    justify-self: center;
+    align-self: start;
+  }
+
+  .dossier-support-title {
+    max-width: 500px;
+  }
+
+  .dossier-paragraph {
+    max-width: none;
+  }
+
+  .dossier-card-face {
+    padding: clamp(1rem, 4vw, 1.5rem);
+  }
+
+  .dossier-card-institution {
+    font-size: 0.55rem;
+  }
+
+  .dossier-card-classification {
+    font-size: 0.48rem;
+  }
+
+  .dossier-card-name {
+    font-size: clamp(1.5rem, 6vw, 2.3rem);
+  }
+
+  .dossier-card-role,
+  .dossier-card-id {
+    font-size: 0.55rem;
+  }
+
+  .dossier-card-detail dt {
+    font-size: 0.43rem;
+  }
+
+  .dossier-card-detail dd {
+    font-size: 0.55rem;
+  }
+
+  .dossier-card-barcode {
+    font-size: 0.55rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .dossier-card-face {
+    padding: 0.85rem;
+  }
+
+  .dossier-card-details {
+    gap: 0.45rem;
+  }
+
+  .dossier-card-name {
+    font-size: 1.35rem;
+  }
+}
+
+/* ========================================
+   REDUCED MOTION
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .dossier-card {
+    transition: none;
+  }
+
+  .dossier-card-motion {
+    animation: none;
+  }
+
+  .dossier-card-tilt {
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ========================================
+   FLOATING CARD
+======================================== */
+
+.dossier-card-motion {
+  width: 100%;
+  animation: dossier-float 6s ease-in-out infinite;
+}
+
+@keyframes dossier-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+/* ========================================
+   CURSOR TILT
+======================================== */
+
+.dossier-card-tilt {
+  width: 100%;
+  transform-style: preserve-3d;
+
+  transform: perspective(1100px) rotateX(var(--tilt-x, 0deg))
+    rotateY(var(--tilt-y, 0deg));
+
+  transition: transform 850ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dossier-card-toggle:hover .dossier-card-tilt {
+  transition-duration: 90ms;
+}
+
+/* ========================================
+   RANDOMART
+======================================== */
+
+.dossier-card-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-height: 0;
+}
+
+.dossier-card-front .dossier-card-identity {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.dossier-card-randomart {
+  flex: 0 0 auto;
+  margin: 0;
+  color: var(--color-accent-dark);
+  font-family: var(--font-mono);
+  font-size: clamp(0.36rem, 0.55vw, 0.48rem);
+  line-height: 1.15;
+  letter-spacing: 0;
+  white-space: pre;
+  opacity: 0.8;
+  user-select: none;
+}
+
+@media (max-width: 700px) {
+  .dossier-card-randomart {
+    font-size: 0.4rem;
+  }
+}
+
+/* ========================================
+   PERSONAL CARD PORTRAIT
+======================================== */
+
+.dossier-card-portrait {
+  position: absolute;
+  z-index: 0;
+  right: -7%;
+  bottom: -28%;
+
+  width: 68%;
+  height: 145%;
+
+  object-fit: contain;
+  object-position: right bottom;
+
+  opacity: 0.9;
+  pointer-events: none;
+  user-select: none;
+
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.65) 32%,
+    #000 60%
+  );
+
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.65) 32%,
+    #000 60%
+  );
+}
+
+.dossier-card-back .dossier-card-header,
+.dossier-card-back .dossier-card-main,
+.dossier-card-back .dossier-card-details,
+.dossier-card-back .dossier-card-footer {
+  position: relative;
+  z-index: 1;
+}
+
+.dossier-card-back .dossier-card-main {
+  width: 65%;
+}
+
+.dossier-card-back .dossier-card-details {
+  width: 72%;
+}
+
+.dossier-card-back .dossier-card-identity {
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 380px) {
+  .dossier-card-portrait {
+    right: -12%;
+    width: 72%;
+  }
+
+  .dossier-card-back .dossier-card-main {
+    width: 70%;
+  }
+}
+
+/* ========================================
+   PROFILE TRANSITION
+======================================== */
+
+.dossier-support-entering {
+  animation: dossier-content-enter 550ms var(--ease-out) both;
+}
+
+@keyframes dossier-content-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dossier-support-entering {
+    animation: none;
+  }
+}
