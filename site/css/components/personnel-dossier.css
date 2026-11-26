@@ -165,7 +165,7 @@
 .dossier-card {
   position: relative;
   width: 100%;
-  aspect-ratio: 1.42 / 1;
+  aspect-ratio: 4/5;
   transform-style: preserve-3d;
   transition: transform 800ms cubic-bezier(0.2, 0.75, 0.25, 1);
 }
@@ -234,7 +234,7 @@
   top: 0.65rem;
   left: 50%;
 
-  width: 1.35rem;
+  width: 2.65rem;
   height: 0.65rem;
 
   transform: translateX(-50%);
