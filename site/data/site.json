@@ -22,15 +22,6 @@
       }
     ]
   },
-  "about": {
-    "eyebrow": "ABOUT ORI",
-    "title": "Behind the screen.",
-    "intro": "Developer by craft, creative by nature.",
-    "paragraphs": [
-      "I'm a developer who enjoys bringing ideas to life through code, thoughtful design, and a little bit of experimentation.",
-      "I like exploring how software can be useful, expressive, and enjoyable to interact with. Empty Spaces is my little home for sharing that journey."
-    ]
-  },
   "contact": {
     "eyebrow": "OPEN CHANNEL",
     "title": "A signal has been received.",

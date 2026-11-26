@@ -70,42 +70,23 @@ function renderHeroActions(actions = []) {
 }
 
 function renderSiteContent(data) {
-  setText('[data-site="hero.eyebrow"]', data.hero.eyebrow);
-  setText('[data-site="hero.title"]', data.hero.title);
-  setText('[data-site="hero.description"]', data.hero.description);
+  setText('[data-site="hero.eyebrow"]', data.hero?.eyebrow);
+  setText('[data-site="hero.title"]', data.hero?.title);
+  setText('[data-site="hero.description"]', data.hero?.description);
 
-  renderHeroActions(data.hero.actions);
+  renderHeroActions(data.hero?.actions ?? []);
 
-  setText('[data-site="about.eyebrow"]', data.about.eyebrow);
-  setText('[data-site="about.title"]', data.about.title);
-  setText('[data-site="about.intro"]', data.about.intro);
-
-  const aboutContainer = document.querySelector("[data-about-paragraphs]");
-
-  if (aboutContainer) {
-    aboutContainer.replaceChildren();
-
-    (data.about.paragraphs ?? []).forEach((paragraph) => {
-      const element = document.createElement("p");
-
-      element.textContent = paragraph;
-      element.dataset.adaptiveContrast = "";
-
-      aboutContainer.append(element);
-    });
-  }
-
-  setText('[data-site="contact.eyebrow"]', data.contact.eyebrow);
-  setText('[data-site="contact.title"]', data.contact.title);
-  setText('[data-site="contact.description"]', data.contact.description);
+  setText('[data-site="contact.eyebrow"]', data.contact?.eyebrow);
+  setText('[data-site="contact.title"]', data.contact?.title);
+  setText('[data-site="contact.description"]', data.contact?.description);
 
   setLink(
     '[data-site="contact.email"]',
-    data.contact.buttonLabel,
-    `mailto:${data.contact.email}`,
+    data.contact?.buttonLabel,
+    data.contact?.email ? `mailto:${data.contact.email}` : null,
   );
 
-  setText('[data-site="footer.message"]', data.footer.message);
+  setText('[data-site="footer.message"]', data.footer?.message);
 }
 
 function renderProjects(projects) {
