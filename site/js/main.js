@@ -1,10 +1,12 @@
 import { loadContent } from "./content.js";
+import { initializeCharacter } from "./character/characterController.js";
 
 async function initializeSite() {
   try {
     await loadContent();
 
-    // Wait for fonts before revealing the page.
+    initializeCharacter();
+
     if (document.fonts?.ready) {
       await document.fonts.ready;
     }
