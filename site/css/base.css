@@ -26,6 +26,8 @@
   --color-border: rgba(36, 36, 36, 0.14);
   --color-border-strong: rgba(36, 36, 36, 0.28);
 
+  --color-about-canvas: #F0EFE9;
+
   /* Typography */
   --font-display: "Redaction", serif;
   --font-mono: "Departure Mono", monospace;
